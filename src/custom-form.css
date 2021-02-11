@@ -1,0 +1,62 @@
+.form {
+   border: 1px solid #ddd;
+}
+
+.custom-form-control {
+   display: flex;
+   /* border: 1px solid red; */
+   justify-content: center;
+   margin: 0.5rem 0;
+}
+.custom-form-control .custom-form-label {
+   width: 100px;
+   text-align: left;
+}
+
+.custom-form-control .custom-form-input {
+   border-radius: 5px;
+}
+
+.custom-form-control .custom-button {
+   background-color: #439d44;
+   color: #fff;
+   padding: 5px 15px;
+   border-radius: 3px;
+}
+
+.custom-form-control .custom-button:hover {
+   background-color: #3a8b3b;
+   color: #fff;
+   padding: 5px 15px;
+   border-radius: 3px;
+}
+
+.dash-card-container {
+   margin: 20px 0;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-auto-rows: minmax(74px, auto);
+   column-gap: 25px;
+   row-gap: 20px;
+}
+
+.dash-card-item {
+   background-color: #fdfdfd;
+   border-radius: 2px;
+   text-align: center;
+   color: #1d0505;
+   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 2px 2px rgba(0, 0, 0, 0.15),
+      0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.15);
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}
+
+.thin-text-title {
+   font-size: 14px;
+   font-weight: 100;
+}
+.thick-text-body {
+   font-size: 20px;
+   font-weight: bold;
+}

@@ -21,12 +21,10 @@ import ViewBranches from './components/branch/ViewBranches';
 import { Container, Header, Content, Nav, Navbar, Dropdown, Icon } from 'rsuite';
 import 'devextreme-intl';
 // import 'moment/locale/fr';
+import GroupSalesReport from './components/reports/GroupSalesReport';
+import IndivSalesReport from './components/reports/IndivSalesReport';
 
 class App extends Component {
-   // constructor() {
-   //   // super(props);
-   //   // locale('fr');
-   // }
    componentDidMount() {
       this.user = JSON.parse(AuthService.getLoggedInUser());
    }
@@ -71,10 +69,10 @@ class App extends Component {
             this.props.history.push('/viewBranches');
             break;
          case 'viewIndivReports':
-            this.props.history.push('/viewBranches');
+            this.props.history.push('/viewIndivReports');
             break;
          case 'viewGroupReports':
-            this.props.history.push('/viewBranches');
+            this.props.history.push('/viewGroupReports');
             break;
          default:
             break;
@@ -188,6 +186,9 @@ class App extends Component {
                         <AuthenticatedRoute path='/createUser/:id' component={CreateUser} />
                         <AuthenticatedRoute path='/createBranch' component={CreateBranch} />
                         <AuthenticatedRoute path='/viewBranches' component={ViewBranches} />
+                        <AuthenticatedRoute path='/viewBranches' component={ViewBranches} />
+                        <AuthenticatedRoute path='/viewGroupReports' component={GroupSalesReport} />
+                        <AuthenticatedRoute path='/viewIndivReports' component={IndivSalesReport} />
                         <Route path='/not-found' component={ErrorComponent} />
                         <Redirect to='/not-found' />
                      </Switch>
