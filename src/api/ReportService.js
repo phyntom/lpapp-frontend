@@ -1,6 +1,5 @@
 import { instance } from './MainService';
 import AuthService from '../api/AuthService';
-import moment from 'moment';
 
 export const fetchIndividualPoliciesByDates = async (startDate, endDate) => {
    const data = { startDate, endDate };

@@ -1,14 +1,18 @@
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBBtn, MDBCardBody } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody } from 'mdbreact';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../custom-form.css';
 import { fetchIndividualPoliciesByDates } from '../../api/ReportService';
 import { format } from 'date-fns';
+import { CSVLink } from 'react-csv';
+import Loading from '../common/Loading';
 
 const IndivSalesReport = (props) => {
    const [startDate, setStartDate] = useState(Date.now);
    const [endDate, setEndDate] = useState(Date.now);
+   const [loading, setLoading] = useState(true);
+   const [searching, isSearching] = useState(false);
    const [data, setData] = useState([]);
    const [totalFees, setTotalFees] = useState(0);
    const [totalSumInsured, setTotalSumInsured] = useState(0);
@@ -16,12 +20,69 @@ const IndivSalesReport = (props) => {
    const [totalNetPremium, setTotalNetPremium] = useState(0);
    const dateFormat = 'yyyy/MM/dd';
 
+   const headers = [
+      {
+         label: 'Policy Number',
+         key: 'policyNumber',
+      },
+      {
+         label: 'Entity Name',
+         key: 'entityName',
+      },
+      {
+         label: 'Age',
+         key: 'age',
+      },
+      {
+         label: 'Start Date',
+         key: 'startDate',
+      },
+      {
+         label: 'End Date',
+         key: 'endDate',
+      },
+      {
+         label: 'Bank Name',
+         key: 'bankName',
+      },
+      {
+         label: 'Created By',
+         key: 'createdBy',
+      },
+      {
+         label: 'Sum Insured',
+         key: 'sumInsured',
+      },
+      {
+         label: 'Duration',
+         key: 'duration',
+      },
+      {
+         label: 'Total Premium',
+         key: 'totalPremium',
+      },
+      {
+         label: 'Accessories',
+         key: 'accessories',
+      },
+      {
+         label: 'Total Net Premium',
+         key: 'totalNetPremium',
+      },
+      {
+         label: 'Created On',
+         key: 'createdOn',
+      },
+   ];
+
    const formatNumber = (input) => {
       return new Intl.NumberFormat('en-US', {}).format(input);
    };
 
    const handleSearch = async (e) => {
       e.preventDefault();
+      setLoading(true);
+      isSearching(true);
       try {
          const response = await fetchIndividualPoliciesByDates(
             format(startDate, 'YYYY-MM-DD'),
@@ -35,8 +96,12 @@ const IndivSalesReport = (props) => {
             fetchedRecords.reduce((total, policy) => total + policy.totalNetPremium, 0)
          );
          setTotalSumInsured(fetchedRecords.reduce((total, policy) => total + policy.sumInsured, 0));
+         setLoading(false);
+         isSearching(false);
       } catch (err) {
          console.error('An error occurs', err);
+         setLoading(false);
+         isSearching(false);
       }
    };
 
@@ -76,6 +141,19 @@ const IndivSalesReport = (props) => {
                            </button>
                         </div>
                      </form>
+                     {searching && <Loading loading={loading} />}
+                     {data.length > 0 && (
+                        <>
+                           <CSVLink
+                              data={data}
+                              headers={headers}
+                              filename={'individual-policies.csv'}
+                              target='_blank'
+                           >
+                              Download File
+                           </CSVLink>
+                        </>
+                     )}
                      <div className='dash-card-container'>
                         <div className='dash-card-item'>
                            <div className='thin-text-title'>Policies</div>
